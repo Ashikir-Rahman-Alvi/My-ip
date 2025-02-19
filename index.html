@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get Client IP Address</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h1 {
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 18px;
+      color: #555;
+      margin-top: 0;
+    }
+
+    #ip {
+      font-weight: bold;
+      color: #2a9d8f;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Your IP Address is:</h1>
+    <p id="ip">Loading...</p>
+  </div>
+
+  <script>
+    // Fetch the client's IP address from ipify
+    fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('ip').innerText = data.ip;
+      })
+      .catch(error => {
+        console.error('Error fetching IP address:', error);
+        document.getElementById('ip').innerText = 'Unable to fetch IP address';
+      });
+  </script>
+</body>
+</html>
