@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Get Client IP Address</title>
+  <title>Your IP & Location Info</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+      background-color: #eef;
       margin: 0;
-      padding: 0;
+      padding: 20px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -23,22 +23,22 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       text-align: center;
       width: 100%;
-      max-width: 400px;
+      max-width: 500px;
     }
 
     h1 {
-      color: #333;
       font-size: 24px;
-      margin-bottom: 10px;
+      color: #333;
+      margin-bottom: 20px;
     }
 
-    p {
+    .info {
       font-size: 18px;
       color: #555;
-      margin-top: 0;
+      margin: 8px 0;
     }
 
-    #ip {
+    .info span {
       font-weight: bold;
       color: #2a9d8f;
     }
@@ -46,20 +46,32 @@
 </head>
 <body>
   <div class="container">
-    <h1>Your IP Address is:</h1>
-    <p id="ip">Loading...</p>
+    <h1>Your IP & Location Info</h1>
+    <p class="info">IP Address: <span id="ip">Loading...</span></p>
+    <p class="info">Country: <span id="country">Loading...</span></p>
+    <p class="info">Region: <span id="region">Loading...</span></p>
+    <p class="info">City: <span id="city">Loading...</span></p>
+    <p class="info">ISP: <span id="isp">Loading...</span></p>
   </div>
 
   <script>
-    // Fetch the client's IP address from ipify
-    fetch('https://api.ipify.org?format=json')
+    // Fetch extended information from ip-api.com
+    fetch('http://ip-api.com/json/')
       .then(response => response.json())
       .then(data => {
-        document.getElementById('ip').innerText = data.ip;
+        document.getElementById('ip').innerText = data.query || 'N/A';
+        document.getElementById('country').innerText = data.country || 'N/A';
+        document.getElementById('region').innerText = data.regionName || 'N/A';
+        document.getElementById('city').innerText = data.city || 'N/A';
+        document.getElementById('isp').innerText = data.isp || 'N/A';
       })
       .catch(error => {
-        console.error('Error fetching IP address:', error);
-        document.getElementById('ip').innerText = 'Unable to fetch IP address';
+        console.error('Error fetching data:', error);
+        document.getElementById('ip').innerText = 'Unavailable';
+        document.getElementById('country').innerText = 'Unavailable';
+        document.getElementById('region').innerText = 'Unavailable';
+        document.getElementById('city').innerText = 'Unavailable';
+        document.getElementById('isp').innerText = 'Unavailable';
       });
   </script>
 </body>
